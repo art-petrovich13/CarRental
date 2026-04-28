@@ -1,4 +1,5 @@
 ﻿using CarRental.API.Models;
+using CarRental_API.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarRental.API.Data;
@@ -13,6 +14,7 @@ public class AppDbContext : DbContext
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Rental> Rentals { get; set; }
     public DbSet<Payment> Payments { get; set; }
+    public DbSet<MaintenanceRecord> MaintenanceRecords { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -28,6 +30,10 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Payment>()
             .Property(p => p.Amount)
+            .HasColumnType("decimal(10,2)");
+
+        modelBuilder.Entity<MaintenanceRecord>()
+            .Property(m => m.Cost)
             .HasColumnType("decimal(10,2)");
 
         modelBuilder.Entity<Rental>()

@@ -1,4 +1,7 @@
-﻿namespace CarRental.API.Models;
+﻿using CarRental_API.Models;
+using System.Collections;
+
+namespace CarRental.API.Models;
 
 public class Car
 {
@@ -15,4 +18,5 @@ public class Car
     public CarCategory Category { get; set; } = null!;
 
     public ICollection<Rental> Rentals { get; set; } = new List<Rental>();
+    public ICollection<MaintenanceRecord> MaintenanceRecords { get; set; } = new List<MaintenanceRecord>();
 }

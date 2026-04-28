@@ -18,6 +18,7 @@ public class ReportsController : ControllerBase
         var totalCars = await _db.Cars.CountAsync();
         var availableCars = await _db.Cars.CountAsync(c => c.Status == "available");
         var rentedCars = await _db.Cars.CountAsync(c => c.Status == "rented");
+        var completedRental = await _db.Rentals.CountAsync(r => r.Status == "completed");
         var totalClients = await _db.Clients.CountAsync();
         var activeRentals = await _db.Rentals.CountAsync(r => r.Status == "active");
         var totalRevenue = await _db.Rentals
@@ -27,7 +28,7 @@ public class ReportsController : ControllerBase
             .Where(r => r.Status == "completed" && r.StartDate.Month == DateTime.UtcNow.Month && r.StartDate.Year == DateTime.UtcNow.Year)
             .SumAsync(r => (decimal?)r.TotalCost) ?? 0;
 
-        return Ok(new { totalCars, availableCars, rentedCars, totalClients, activeRentals, totalRevenue, monthRevenue });
+        return Ok(new { totalCars, availableCars, rentedCars, completedRental, totalClients, activeRentals, totalRevenue, monthRevenue });
     }
 
     // GET /api/reports/rentals-by-month 
